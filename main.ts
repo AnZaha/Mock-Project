@@ -1,49 +1,32 @@
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    Fish_Food = sprites.createProjectileFromSprite(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . d . e . . e . . . . . 
-        . . . . . e d d e e . . . . . . 
-        . . e d e d d e e e d . . . . . 
-        . . . d e d e d d e d . . . . . 
-        . . . d e d e e d e d . . . . . 
-        . . . d e d d d d d e . . . . . 
-        . . . . e e e e e e d . . . . . 
-        . . . . . . . d e d d . . . . . 
-        . . . . . . . . . e . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, Off_right_projectile_spawner, 50, 50)
+    Fish_Food.setVelocity(50, 50)
+    Fish_Food.setPosition(160, randint(5, 115))
 })
 function Velocity_Increase_Points (Level: number) {
 	
 }
 let Fish_Food: Sprite = null
-let Off_right_projectile_spawner: Sprite = null
 let Level = 0
-let Fish = sprites.create(assets.image`myImage`, SpriteKind.Player)
-Off_right_projectile_spawner = sprites.create(img`
+Fish_Food = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
-    . . . . . . 3 3 3 3 3 . . . . . 
-    . . . . . . 3 3 3 3 3 . . . . . 
-    . . . . . . 3 3 3 3 3 . . . . . 
-    . . . . . . 3 3 3 3 3 . . . . . 
-    . . . . . . 3 3 3 3 3 . . . . . 
     . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
+    . . . . . 5 5 5 5 5 5 . . . . . 
+    . . . . . 5 4 4 4 4 5 . . . . . 
+    . . . . . 5 4 5 5 4 5 . . . . . 
+    . . . . . 5 4 5 5 4 5 . . . . . 
+    . . . . . 5 4 4 4 4 5 . . . . . 
+    . . . . . 5 5 5 5 5 5 . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
-tiles.placeOnTile(Off_right_projectile_spawner, tiles.getTileLocation(11, 240))
+let Fish = sprites.create(assets.image`myImage`, SpriteKind.Player)
+Fish.setStayInScreen(true)
 Fish.setVelocity(30, 0)
 controller.moveSprite(Fish, 40, 40)
 scene.setBackgroundImage(assets.image`background water`)
@@ -52,6 +35,3 @@ Fish.ax = 30
 tiles.setCurrentTilemap(tilemap`level`)
 scene.cameraFollowSprite(Fish)
 tiles.placeOnTile(Fish, tiles.getTileLocation(0, 252))
-forever(function () {
-	
-})
