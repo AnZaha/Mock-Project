@@ -1,37 +1,104 @@
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    Fish_Food.setVelocity(50, 50)
-    Fish_Food.setPosition(160, randint(5, 115))
-})
-function Velocity_Increase_Points (Level: number) {
-	
+function Points (mySprite: Sprite, level: number) {
+    list = [
+    img`
+        . . 5 5 5 5 5 . . 5 5 5 5 5 . . 
+        . . 5 5 5 5 5 5 5 5 5 5 5 5 . . 
+        5 5 . 5 5 5 5 . . 5 5 5 5 . 5 5 
+        5 5 5 . 5 5 5 5 5 5 5 5 . 5 5 5 
+        5 5 5 5 . 5 5 . . 5 5 . 5 5 5 5 
+        5 5 5 5 5 . 5 5 5 5 . 5 5 5 5 5 
+        5 5 5 5 5 5 . 5 5 . 5 5 5 5 5 5 
+        . 5 . 5 . 5 5 . . 5 5 . 5 . 5 . 
+        . 5 . 5 . 5 5 . . 5 5 . 5 . 5 . 
+        5 5 5 5 5 5 . 5 5 . 5 5 5 5 5 5 
+        5 5 5 5 5 . 5 5 5 5 . 5 5 5 5 5 
+        5 5 5 5 . 5 5 . . 5 5 . 5 5 5 5 
+        5 5 5 . 5 5 5 5 5 5 5 5 . 5 5 5 
+        5 5 . 5 5 5 5 . . 5 5 5 5 . 5 5 
+        . . 5 5 5 5 5 5 5 5 5 5 5 5 . . 
+        . . 5 5 5 5 5 . . 5 5 5 5 5 . . 
+        `,
+    img`
+        . . 9 9 9 9 9 . . 9 9 9 9 9 . . 
+        . . 9 9 9 9 9 9 9 9 9 9 9 9 . . 
+        9 9 . 9 9 9 9 . . 9 9 9 9 . 9 9 
+        9 9 9 . 9 9 9 9 9 9 9 9 . 9 9 9 
+        9 9 9 9 . 9 9 . . 9 9 . 9 9 9 9 
+        9 9 9 9 9 . 9 9 9 9 . 9 9 9 9 9 
+        9 9 9 9 9 9 . 9 9 . 9 9 9 9 9 9 
+        . 9 . 9 . 9 9 . . 9 9 . 9 . 9 . 
+        . 9 . 9 . 9 9 . . 9 9 . 9 . 9 . 
+        9 9 9 9 9 9 . 9 9 . 9 9 9 9 9 9 
+        9 9 9 9 9 . 9 9 9 9 . 9 9 9 9 9 
+        9 9 9 9 . 9 9 . . 9 9 . 9 9 9 9 
+        9 9 9 . 9 9 9 9 9 9 9 9 . 9 9 9 
+        9 9 . 9 9 9 9 . . 9 9 9 9 . 9 9 
+        . . 9 9 9 9 9 9 9 9 9 9 9 9 . . 
+        . . 9 9 9 9 9 . . 9 9 9 9 9 . . 
+        `,
+    img`
+        . . a a a a a . . a a a a a . . 
+        . . a a a a a a a a a a a a . . 
+        a a . a a a a . . a a a a . a a 
+        a a a . a a a a a a a a . a a a 
+        a a a a . a a . . a a . a a a a 
+        a a a a a . a a a a . a a a a a 
+        a a a a a a . a a . a a a a a a 
+        . a . a . a a . . a a . a . a . 
+        . a . a . a a . . a a . a . a . 
+        a a a a a a . a a . a a a a a a 
+        a a a a a . a a a a . a a a a a 
+        a a a a . a a . . a a . a a a a 
+        a a a . a a a a a a a a . a a a 
+        a a . a a a a . . a a a a . a a 
+        . . a a a a a a a a a a a a . . 
+        . . a a a a a . . a a a a a . . 
+        `,
+    img`
+        . . 1 1 1 1 1 . . 1 1 1 1 1 . . 
+        . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+        1 1 3 1 1 1 1 . . 1 1 1 1 3 1 1 
+        1 1 1 3 1 1 1 1 1 1 1 1 3 1 1 1 
+        1 1 1 1 3 1 1 . . 1 1 3 1 1 1 1 
+        1 1 1 1 1 3 1 1 1 1 3 1 1 1 1 1 
+        1 1 1 1 1 1 3 . . 3 1 1 1 1 1 1 
+        . 1 . 1 . 1 . . . . 1 . 1 . 1 . 
+        . 1 . 1 . 1 . . . . 1 . 1 . 1 . 
+        1 1 1 1 1 1 3 . . 3 1 1 1 1 1 1 
+        1 1 1 1 1 3 1 1 1 1 3 1 1 1 1 1 
+        1 1 1 1 3 1 1 . . 1 1 3 1 1 1 1 
+        1 1 1 3 1 1 1 1 1 1 1 1 3 1 1 1 
+        1 1 3 1 1 1 1 . . 1 1 1 1 3 1 1 
+        . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+        . . 1 1 1 1 1 . . 1 1 1 1 1 . . 
+        `
+    ]
+    while (Level > 3) {
+    	
+    }
 }
-let Fish_Food: Sprite = null
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    Level = Level + 1
+    tiles.placeOnTile(Fish, tiles.getTileLocation(0, current_row - 13))
+    Fish.setVelocity(Current_velocity + 50, 0)
+})
+let list: Image[] = []
+let Current_velocity = 0
+let current_row = 0
+let Fish: Sprite = null
 let Level = 0
-Fish_Food = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . 5 5 5 5 5 5 . . . . . 
-    . . . . . 5 4 4 4 4 5 . . . . . 
-    . . . . . 5 4 5 5 4 5 . . . . . 
-    . . . . . 5 4 5 5 4 5 . . . . . 
-    . . . . . 5 4 4 4 4 5 . . . . . 
-    . . . . . 5 5 5 5 5 5 . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Player)
-let Fish = sprites.create(assets.image`myImage`, SpriteKind.Player)
-Fish.setStayInScreen(true)
-Fish.setVelocity(30, 0)
-controller.moveSprite(Fish, 40, 40)
+Level = 0
 scene.setBackgroundImage(assets.image`background water`)
-Fish.changeScale(3, ScaleAnchor.Middle)
-Fish.ax = 30
 tiles.setCurrentTilemap(tilemap`level`)
+let EndPole = sprites.create(assets.image`EndPole`, SpriteKind.Enemy)
+tiles.placeOnTile(EndPole, tiles.getTileLocation(250, 252))
+EndPole.changeScale(10, ScaleAnchor.Middle)
+Fish = sprites.create(assets.image`myImage`, SpriteKind.Player)
+current_row = 252
+tiles.placeOnTile(Fish, tiles.getTileLocation(0, current_row))
 scene.cameraFollowSprite(Fish)
-tiles.placeOnTile(Fish, tiles.getTileLocation(0, 252))
+Fish.setStayInScreen(true)
+Current_velocity = Current_velocity
+Fish.setVelocity(80, 0)
+Fish.changeScale(3, ScaleAnchor.Middle)
+controller.moveSprite(Fish, 40, 40)
